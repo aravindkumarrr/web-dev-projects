@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Billing Application</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #2F4546;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            align-items: center;
+        }
+
+        #header {
+            width: 100%;
+            height: 12vh;
+            background-color: #46302F;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #restaurant_title {
+            color: #FFFFFF;
+            font-size: 48px;
+            margin: 0;
+        }
+
+        #non_header {
+            height: 83vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding-top: 20px;
+        }
+
+        .dish_container {
+            height: 14vh;
+            width: 80vw;
+            background-color: white;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            overflow: hidden; 
+            /*overflow: hidden; tells the parent: "Anything inside me 
+            that tries to go outside my borders (including my rounded corners) should be 
+            invisible." Helps create that border-radius effect without the childrens' square
+            borders going out OR prevent the parent's colour that will be visible in btw the 
+            child containers*/
+        }
+
+        .dish_name { background-color: #ff0000; }
+        .dish_price { background-color: #f6ff00; }
+        .dish_qty { background-color: #00d0ff; gap: 10px; }
+
+        
+        .dish_name, .dish_price, .dish_qty {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dish_name_text, .dish_price_text, .dish_qty_text {
+            font-size: 24px;
+            font-family: 'Gill Sans', sans-serif;
+            font-weight: 400;
+            margin: 0;
+            text-align: center;
+        }
+
+        .qty_input {
+            height: 36px;
+            width: 72px;
+            border: 0.5px solid grey;
+            border-radius: 10px;
+            font-size: 24px;
+            text-align: center;
+            padding-left: 12px;
+        }
+
+        #btn_container{
+            height: 50px;
+            width: 80vw;
+            /* background-color: white; */
+            display: flex;
+            justify-content: center;
+            gap: 12vw;
+        }
+
+        #reset_btn{
+            height: 50px;
+            width: 7vw;
+            background-color: orange;
+            border: 1px solid white;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        #submit_btn{
+            height: 50px;
+            width: 7vw; 
+            background-color: green;
+            border: 1px solid white;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        #order_summary{
+            height: 500px;
+            width: 30vw;
+            background-color: white;
+            border-radius: 10px;
+            display:none;
+        }
+
+        #order_summary_heading_container{
+            height: 72px;
+            width: 100%;
+            border-bottom: 2px dashed black;
+            display:flex;
+            justify-content: center;
+        }
+
+        #bill{
+            font-size: 24px;
+            padding-left: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1 id="restaurant_title">Restaurant Name</h1>
+    </div>
+    <div id="non_header">
+        <div class="dish_container">
+            <div class="dish_name">
+                <h2 class="dish_name_text">Dish 1</h2>
+            </div>
+            <div class="dish_price">
+                <h2 class="dish_price_text">$78</h2>
+            </div>
+            <div class="dish_qty">
+                <h2 class="dish_qty_text">Qty:</h2>
+                <input type="number" min="0" class="qty_input" id = "qty1" value="0">
+            </div>
+        </div>
+
+        <div class="dish_container">
+            <div class="dish_name">
+                <h2 class="dish_name_text">Dish 2</h2>
+            </div>
+            <div class="dish_price">
+                <h2 class="dish_price_text">$123</h2>
+            </div>
+            <div class="dish_qty">
+                <h2 class="dish_qty_text">Qty:</h2>
+                <input type="number" min="0" class="qty_input" id = "qty2"  value="0">
+            </div>
+        </div>
+
+        <div class="dish_container">
+            <div class="dish_name">
+                <h2 class="dish_name_text">Dish 3</h2>
+            </div>
+            <div class="dish_price">
+                <h2 class="dish_price_text">$499</h2>
+            </div>
+            <div class="dish_qty">
+                <h2 class="dish_qty_text">Qty:</h2>
+                <input type="number" min="0" class="qty_input" id = "qty3" value="0">
+            </div>
+        </div>
+
+        <div class="dish_container">
+            <div class="dish_name">
+                <h2 class="dish_name_text">Dish 4</h2>
+            </div>
+            <div class="dish_price">
+                <h2 class="dish_price_text">$461</h2>
+            </div>
+            <div class="dish_qty">
+                <h2 class="dish_qty_text">Qty:</h2>
+                <input type="number" min="0" class="qty_input" id = "qty4" value="0">
+            </div>
+        </div>
+
+        <div class="dish_container">
+            <div class="dish_name">
+                <h2 class="dish_name_text">Dish 5</h2>
+            </div>
+            <div class="dish_price">
+                <h2 class="dish_price_text">$260</h2>
+            </div>
+            <div class="dish_qty">
+                <h2 class="dish_qty_text">Qty:</h2>
+                <input type="number" min="0" class="qty_input" id = "qty5" value="0">
+            </div>
+        </div>
+
+        <div id = "btn_container">
+            <button onclick="resetOrder()" id = "reset_btn">Reset</button>
+            <button onclick="submitOrder()" id = "submit_btn">Submit</button>
+        </div>
+
+        
+    </div>
+
+    <div id = "order_summary">
+        <div id = "order_summary_heading_container">
+            <h1 id="order_summary_heading">Order Summary</h1>
+        </div>
+        <p id = "bill"></p>
+    </div>
+
+    <script>
+        const menu = ["Dish 1", "Dish 2", "Dish 3", "Dish 4", "Dish 5"];
+        let qty = [0, 0, 0, 0, 0];
+        const price = [78, 123, 499, 461, 260];
+        let individual_total = [0, 0, 0, 0, 0];
+        
+
+        function submitOrder(){
+            qty[0] = parseInt(document.getElementById("qty1").value);
+            qty[1] = parseInt(document.getElementById("qty2").value);
+            qty[2] = parseInt(document.getElementById("qty3").value);
+            qty[3] = parseInt(document.getElementById("qty4").value);
+            qty[4] = parseInt(document.getElementById("qty5").value);
+
+            individual_total = [qty[0]*price[0], qty[1]*price[1], qty[2]*price[2], qty[3]*price[3], qty[4]*price[4]];
+            
+            document.getElementById("order_summary").style.display = "block";
+            let bill_field = document.getElementById("bill");
+            bill_field.innerHTML = "";
+            let all_empty = false;
+            let total=0;
+            for(let i=0;i<5;i++){
+                if(qty[i]>0) all_empty = true;
+            }
+            if(all_empty){
+                for(let i=0;i<5;i++){
+                    let s = "";
+                    if(qty[i]!=0){
+                        s+= "Item: " + menu[i] + ", (" + price[i] + " x " + qty[i] + ") = $" + individual_total[i];
+                        total += individual_total[i];
+                    }
+                    bill_field.innerHTML += s + "<br>";
+
+                }
+                bill_field.innerHTML += "------------------" + "<br>";
+                bill_field.innerHTML += "Total Bill + (17% GST) = $" + (0.17*total).toFixed(2);
+            } else{
+                bill_field.innerHTML += "You have not ordered anything yet.";
+            }
+        }
+
+        function resetOrder(){
+            location.reload()
+        }
+    </script>
+</body>
+</html>
